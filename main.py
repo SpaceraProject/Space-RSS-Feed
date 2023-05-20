@@ -4,7 +4,6 @@ import feedparser
 import time
 import configparser
 
-
 # Read the configuration file
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -13,6 +12,7 @@ token = config['setup']['token']
 url_feed = config['setup']['rss_url']
 interval = int(config['setup']['check_interval'])
 prefix = config['setup']['bot_prefix']
+manual = config['setup']['man_bot']
 
 intents = Intents.all()
 intents.members = True
@@ -23,6 +23,7 @@ bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 # List to store the IDs of the already displayed items
 displayed_elements = []
+
 
 # Startup event
 @bot.event
@@ -39,7 +40,7 @@ async def check_rss():
     # Read the RSS feed
     feed = feedparser.parse(url_feed)
     # Get the channel object
-    channel = bot.get_channel(channel_id) 
+    channel = bot.get_channel(channel_id)
 
     # Iterate over the entries in the RSS feed in reverse order (from oldest to newest)
     for entry in feed.entries[::-1]:
@@ -86,6 +87,15 @@ async def stop(ctx):
         await ctx.send("RSS feed checking is not running!")
 
 
+@bot.command()
+async def status(ctx):
+    if check_rss.is_running():
+        await ctx.send("RSS feed checking is running!")
+    else:
+        await ctx.send("RSS feed checking is not running!")
+
+
+# Error handler
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
