@@ -95,6 +95,11 @@ async def status(ctx):
         await ctx.send("RSS feed checking is not running!")
 
 
+@bot.command()
+async def ping(ctx):
+    await ctx.send("Pong!")
+
+
 # Error handler
 @bot.event
 async def on_command_error(ctx, error):

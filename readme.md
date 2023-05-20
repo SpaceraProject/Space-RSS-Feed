@@ -8,6 +8,7 @@ Le RSS Feed Discord Bot est un bot Discord qui permet de suivre les flux RSS et 
 - `!stop` : Permet d'arrêter manuellement le bot.
 - `!start` : Permet de démarrer manuellement le bot.
 - `!status` : Affiche le statut du bot.
+- `!ping` : Affiche le ping du bot. 
 
 ## Prérequis :
 - Python 3.6 ou supérieur
