@@ -1,8 +1,9 @@
-from discord.ext import commands, tasks
+from discord.ext import commands, tasks, commands
 from discord import Intents
 import feedparser
 import time
 import configparser
+from help import CustomHelpCommand
 
 # Read the configuration file
 config = configparser.ConfigParser()
@@ -15,11 +16,10 @@ prefix = config['setup']['bot_prefix']
 manual = config['setup']['man_bot']
 
 intents = Intents.all()
-intents.members = True
-intents.typing = True
-intents.presences = True
-intents.message_content = True
 bot = commands.Bot(command_prefix=prefix, intents=intents)
+
+# Set the help command
+bot.help_command = CustomHelpCommand()
 
 # List to store the IDs of the already displayed items
 displayed_elements = []
